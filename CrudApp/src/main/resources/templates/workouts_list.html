@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crudas</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+</head>
+<body>
+
+<div class="container">
+    <div th:insert="~{Components/nav.html :: nav}"></div>
+    <div class="row mt-3">
+        <div class="col-lg-12">
+            <a href="/workouts/new" class="btn btn-success mb-3">ADD WORKOUT</a>
+            <h1>Workouts:</h1>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Date</th>
+                    <th scope="col">Places</th>
+                    <th scope="col">Location</th>
+                    <th scope="col">Actions</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="workout: ${workouts}">
+                    <td th:text="${workout.getWorkoutID()}"></td>
+                    <td th:text="${workout.getName()}"></td>
+                    <td th:text="${workout.getDate()}"></td>
+                    <td th:text="${workout.getPlaces()}"></td>
+                    <td th:text="${workout.getLocation()}"></td>
+                    <td style="width: 300px; display: flex;">
+                        <a th:href="'/workouts/update/'+${workout.getWorkoutID()}" class="btn btn-info">EDIT</a>
+                        <form style="margin-left: 1rem;" th:action="'/workouts/delete/'+${workout.getWorkoutID()}" method="POST">
+                            <button class="btn btn-danger">
+                                DELETE
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+</body>
+</html>
