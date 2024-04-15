@@ -11,10 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+
 import java.util.List;
 
 @Controller
@@ -41,16 +39,14 @@ public class ClientController {
 
     @PostMapping("/clients/new")
     public String storeClient(
-            @Valid Client client,
+            @Valid @ModelAttribute("clients") Client client,
             BindingResult bindingResult,
-            Model model,
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone
     ){
         if (bindingResult.hasErrors()) {
-            model.addAttribute("clients", client);
             System.out.println(bindingResult);
             return "clients_new";
         }

@@ -15,22 +15,22 @@
         <form method="post" th:object="${clients}" action="/clients/new" enctype="multipart/form-data">
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
-                <input type="text" class="form-control" id="name" name="name" th:field="*{name}" placeholder="Enter a Name..." required>
+                <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter a Name..." required>
                 <span th:if="${#fields.hasErrors('Name')}" th:errors="*{name}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="surname" class="form-label">Surname:</label>
-                <input type="text" class="form-control" id="surname" name="surname" th:field="*{surname}" placeholder="Enter a Surname..." required>
+                <input type="text" class="form-control" id="surname" th:field="*{surname}" placeholder="Enter a Surname..." required>
                 <span th:if="${#fields.hasErrors('Surname')}" th:errors="*{surname}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email address:</label>
-                <input type="email" class="form-control" id="email" name="email" th:field="*{email}" placeholder="Enter an Email..." required>
+                <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter an Email..." required>
                 <span th:if="${#fields.hasErrors('Email')}" th:errors="*{email}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone:</label>
-                <input type="number" class="form-control" id="phone" name="phone" th:field="*{phone}" placeholder="Enter a Phone Number..." minlength="7">
+                <input type="number" class="form-control" id="phone" th:field="*{phone}" placeholder="Enter a Phone Number..." minlength="7">
                 <span th:if="${#fields.hasErrors('Phone')}" th:errors="*{phone}" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
