@@ -16,22 +16,22 @@
             <div class="mb-3">
                 <label for="name" class="form-label">Name:</label>
                 <input type="text" class="form-control" id="name" th:field="*{name}" placeholder="Enter a Name..." required>
-                <span th:if="${#fields.hasErrors('Name')}" th:errors="*{name}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('Name')}" th:errors="*{Name}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="surname" class="form-label">Surname:</label>
                 <input type="text" class="form-control" id="surname" th:field="*{surname}" placeholder="Enter a Surname..." required>
-                <span th:if="${#fields.hasErrors('Surname')}" th:errors="*{surname}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('Surname')}" th:errors="*{Surname}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="email" class="form-label">Email address:</label>
                 <input type="email" class="form-control" id="email" th:field="*{email}" placeholder="Enter an Email..." required>
-                <span th:if="${#fields.hasErrors('Email')}" th:errors="*{email}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('Email')}" th:errors="*{Email}" class="text-danger"></span>
             </div>
             <div class="mb-3">
                 <label for="phone" class="form-label">Phone:</label>
                 <input type="number" class="form-control" id="phone" th:field="*{phone}" placeholder="Enter a Phone Number..." minlength="7">
-                <span th:if="${#fields.hasErrors('Phone')}" th:errors="*{phone}" class="text-danger"></span>
+                <span th:if="${#fields.hasErrors('Phone')}" th:errors="*{Phone}" class="text-danger"></span>
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
