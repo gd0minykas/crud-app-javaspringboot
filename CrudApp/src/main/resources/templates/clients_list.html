@@ -41,6 +41,7 @@
                                 DELETE
                             </button>
                         </form>
+                        <a th:if="${client.agreement!=null}" th:href="${'/clients/'+client.getClientID()+'/agreement'}" class="btn btn-warning mx-2" >AGREEMENT</a>
                     </td>
                 </tr>
                 </tbody>

@@ -24,7 +24,8 @@
                 </select><br>
             </div>
             <input type="hidden" id="date" name="date" th:value="${T(java.time.LocalDateTime).now()}">
-            <button type="submit" class="btn btn-primary">Submit</button>
+            <button type="submit" class="btn btn-primary">SUBMIT</button>
+            <a th:href="'/clients/info/'+${clients.getClientID()}" class="btn btn-danger">BACK</a>
         </form>
     </div>
 </div>

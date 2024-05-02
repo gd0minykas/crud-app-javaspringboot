@@ -20,8 +20,10 @@ public class Client {
     @Email(message = "Email should be valid")
     private String Email;
     @PositiveOrZero
-    @Size(min = 7, max = 12, message = "Phone number must be valid")
+    @Size(min = 7, max = 12, message = "Phone must be between 7 and 12 characters")
     private String Phone;
+    @Column(nullable = true)
+    private String Agreement = null;
 
     public Client() {}
 
@@ -64,6 +66,11 @@ public class Client {
     public String getPhone() {
         return Phone;
     }
+
+    public void setAgreement(String file) { this.Agreement = file; }
+
+    public String getAgreement() { return Agreement; }
+
 
     public void setPhone(String phone) {
         Phone = phone;
