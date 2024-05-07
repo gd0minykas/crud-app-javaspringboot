@@ -8,9 +8,11 @@ import com.example.crudapp.repos.RegistrationRepository;
 import com.example.crudapp.repos.WorkoutRepository;
 import com.example.crudapp.services.FileStorageService;
 import jakarta.validation.Valid;
+import org.hibernate.validator.internal.constraintvalidators.hv.CodePointLengthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -57,29 +59,16 @@ public class ClientController {
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
-            @RequestParam("agreement") MultipartFile agreement
+            @RequestParam("file") MultipartFile file
     ){
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             return "clients_new";
         }
-        Client c = new Client(name, surname, email, phone);
-        System.out.println(agreement.getOriginalFilename());
-        c.setAgreement(agreement.getOriginalFilename());
+        Client c = new Client(name, surname, email, phone, file.getOriginalFilename());
         clientRepository.save(c);
-        fileStorageService.storeFile(agreement, c.getClientID().toString());
+        fileStorageService.store(file, c.getClientID().toString());
         return "redirect:/clients";
-    }
-
-    @GetMapping("/clients/{id}/agreement")
-    @ResponseBody
-    public ResponseEntity<Resource> getAgreement(@PathVariable Integer id) {
-        Client c = clientRepository.getReferenceById(id);
-
-        Resource r = fileStorageService.loadFile(c.getClientID().toString());
-        return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_TYPE, "attachment; filename=\"" + c.getAgreement() + "\"")
-                .body(r);
     }
 
     @GetMapping("/clients/update/{id}")
@@ -101,7 +90,8 @@ public class ClientController {
             @RequestParam("name") String name,
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
-            @RequestParam("phone") String phone
+            @RequestParam("phone") String phone,
+            @RequestParam("file") MultipartFile file
     ){
         if (bindingResult.hasErrors()) {
             model.addAttribute("clients", client);
@@ -112,6 +102,11 @@ public class ClientController {
         c.setSurname(surname);
         c.setEmail(email);
         c.setPhone(phone);
+        if (file != null) {
+            c.setAgreement(file.getOriginalFilename());
+            fileStorageService.store(file, c.getClientID().toString());
+        }
+        c.setAgreement(c.getAgreement());
         clientRepository.save(c);
 
         return "redirect:/clients";
@@ -122,6 +117,7 @@ public class ClientController {
             @PathVariable("id") Integer clientID
     ){
         clientRepository.deleteById(clientID);
+        fileStorageService.delete(clientID.toString());
         return "redirect:/clients";
     }
 
@@ -137,6 +133,17 @@ public class ClientController {
         model.addAttribute("workouts", workouts);
         model.addAttribute("clients", c);
         return "clients_info";
+    }
+
+    @GetMapping("/clients/{id}/agreement")
+    @ResponseBody
+    public ResponseEntity<Resource> agreement(@PathVariable Integer id) {
+        Client c = clientRepository.getReferenceById(id);
+        Resource file = fileStorageService.load(c.getClientID().toString());
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\""+c.getAgreement()+"\"")
+                .body(file);
     }
 
 }

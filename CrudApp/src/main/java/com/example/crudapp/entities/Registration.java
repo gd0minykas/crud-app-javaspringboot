@@ -10,10 +10,10 @@ public class Registration {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer RegID;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "ClientID", referencedColumnName = "ClientID")
     private Client Client;
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "WorkoutID", referencedColumnName = "WorkoutID")
     private Workout Workout;
     @Column(nullable = false)

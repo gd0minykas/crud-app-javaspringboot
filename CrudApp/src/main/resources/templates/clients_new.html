@@ -34,8 +34,8 @@
                 <span th:if="${#fields.hasErrors('Phone')}" th:errors="*{Phone}" class="text-danger"></span>
             </div>
             <div class="mb-3">
-                <label for="agreement" class="form-label">Agreement:</label>
-                <input type="file" class="form-control" name="agreement" id="agreement" accept="application/pdf">
+                <label class="form-label" for="file">Agreement:</label>
+                <input type="file" class="form-control" name="file" id="file" accept="application/pdf">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>

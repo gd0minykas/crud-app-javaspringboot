@@ -2,6 +2,7 @@ package com.example.crudapp.entities;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table
@@ -22,16 +23,16 @@ public class Client {
     @PositiveOrZero
     @Size(min = 7, max = 12, message = "Phone must be between 7 and 12 characters")
     private String Phone;
-    @Column(nullable = true)
     private String Agreement = null;
 
     public Client() {}
 
-    public Client(String name, String surname, String email, String phone) {
+    public Client(String name, String surname, String email, String phone, String agreement) {
         Name = name;
         Surname = surname;
         Email = email;
         Phone = phone;
+        Agreement = agreement;
     }
 
 
@@ -67,10 +68,13 @@ public class Client {
         return Phone;
     }
 
-    public void setAgreement(String file) { this.Agreement = file; }
+    public String getAgreement() {
+        return Agreement;
+    }
 
-    public String getAgreement() { return Agreement; }
-
+    public void setAgreement(String agreement) {
+        Agreement = agreement;
+    }
 
     public void setPhone(String phone) {
         Phone = phone;

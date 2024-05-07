@@ -34,14 +34,14 @@
                     <td th:text="${client.getSurname()}"></td>
                     <td th:text="${client.getEmail()}"></td>
                     <td th:text="${client.getPhone()}"></td>
-                    <td style="width: 300px; display: flex;">
+                    <td style="width: 400px; display: flex;">
                         <a th:href="'/clients/update/'+${client.getClientID()}" class="btn btn-info">EDIT</a>
-                        <form style="margin-left: 1rem;" th:action="'/clients/delete/'+${client.getClientID()}" method="POST">
+                        <form style="margin: 0 1rem;" th:action="'/clients/delete/'+${client.getClientID()}" method="POST">
                             <button class="btn btn-danger">
                                 DELETE
                             </button>
                         </form>
-                        <a th:if="${client.agreement!=null}" th:href="${'/clients/'+client.getClientID()+'/agreement'}" class="btn btn-warning mx-2" >AGREEMENT</a>
+                        <a th:if="${client.getAgreement() != null}" th:href="'/clients/'+${client.getClientID()+'/agreement'}" class="btn btn-warning">AGREEMENT</a>
                     </td>
                 </tr>
                 </tbody>

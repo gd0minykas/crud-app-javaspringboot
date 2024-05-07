@@ -7,6 +7,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,50 +15,59 @@ import java.nio.file.StandardCopyOption;
 
 @Service
 public class FileStorageService {
-    private final Path fileStorageLocation;
+    private final Path fileLocation;
 
     public FileStorageService() {
-        this.fileStorageLocation = Paths.get("uploads");
+        this.fileLocation = Paths.get("uploads");
     }
 
-    public void storeFile(MultipartFile file, String fileName) {
+    public void store(MultipartFile file, String fileName) {
         try {
-            Path targetFile = this.fileStorageLocation.resolve(fileName).normalize().toAbsolutePath();
-            InputStream stream = file.getInputStream();
-            Files.copy(stream, targetFile, StandardCopyOption.REPLACE_EXISTING);
+            Path targetFile = this.fileLocation.resolve(fileName).normalize().toAbsolutePath();
+            InputStream inputStream = file.getInputStream();
+            Files.copy(inputStream, targetFile, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-            System.err.println("Couldn't store file " + fileName);
+            System.out.println("An error occurred while storing the file");
             e.printStackTrace();
         }
     }
 
-    public void storeFile(MultipartFile file) {
-        this.storeFile(file, file.getOriginalFilename());
+    public void store(MultipartFile file) {
+        store(file, "uploads/" + file.getOriginalFilename());
     }
 
-    public Resource loadFile(String fileName) {
+    public Resource load(String fileName) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = this.fileLocation.resolve(fileName).normalize();
             Resource resource = new UrlResource(filePath.toUri());
-            if (!Files.exists(filePath)) {
-                return null;
-            }
+            if (!Files.exists(filePath)) { return null; }
             return resource;
-        } catch (IOException e){
-            System.err.println("Couldn't load file " + fileName);
+        } catch (MalformedURLException e) {
+            System.out.println("An error occurred while loading the file");
             e.printStackTrace();
         }
         return null;
     }
 
-    public String getContentType(String fileName) {
+    public String GetContentType(String fileName) {
         try {
-            Path filePath = this.fileStorageLocation.resolve(fileName).normalize();
+            Path filePath = this.fileLocation.resolve(fileName).normalize();
             return Files.probeContentType(filePath);
         } catch (IOException e) {
-            System.err.println("Couldn't load file " + fileName);
+            System.out.println("An error occurred while loading the file");
             e.printStackTrace();
         }
         return null;
     }
+
+    public void delete(String fileName) {
+        try {
+            Path filePath = this.fileLocation.resolve(fileName).normalize();
+            Files.deleteIfExists(filePath);
+        } catch (IOException e) {
+            System.out.println("An error occurred while deleting the file");
+            e.printStackTrace();
+        }
+    }
+
 }

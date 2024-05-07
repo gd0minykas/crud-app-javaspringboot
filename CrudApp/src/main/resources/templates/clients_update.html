@@ -32,7 +32,10 @@
                 <label for="phone" class="form-label">Phone:</label>
                 <input type="number" class="form-control" id="phone" name="phone" th:field="*{phone}" th:value="${clients.getPhone()}" minlength="7">
                 <span th:if="${#fields.hasErrors('Phone')}" th:errors="*{phone}" class="text-danger"></span>
-
+            </div>
+            <div class="mb-3">
+                <label class="form-label" for="file">Update Agreement:</label>
+                <input type="file" class="form-control" name="file" id="file" accept="application/pdf">
             </div>
             <button type="submit" class="btn btn-primary">Submit</button>
         </form>
