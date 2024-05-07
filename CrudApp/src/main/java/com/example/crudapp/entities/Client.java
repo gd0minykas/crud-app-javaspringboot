@@ -27,12 +27,11 @@ public class Client {
 
     public Client() {}
 
-    public Client(String name, String surname, String email, String phone, String agreement) {
+    public Client(String name, String surname, String email, String phone) {
         Name = name;
         Surname = surname;
         Email = email;
         Phone = phone;
-        Agreement = agreement;
     }
 
 

@@ -22,6 +22,7 @@
                     <th scope="col">Surname</th>
                     <th scope="col">Email</th>
                     <th scope="col">Phone</th>
+                    <th scope="col">File</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -34,6 +35,7 @@
                     <td th:text="${client.getSurname()}"></td>
                     <td th:text="${client.getEmail()}"></td>
                     <td th:text="${client.getPhone()}"></td>
+                    <td><a th:text="${client.getAgreement()}" th:href="'/clients/'+${client.getClientID()+'/agreement'}"></a></td>
                     <td style="width: 400px; display: flex;">
                         <a th:href="'/clients/update/'+${client.getClientID()}" class="btn btn-info">EDIT</a>
                         <form style="margin: 0 1rem;" th:action="'/clients/delete/'+${client.getClientID()}" method="POST">
@@ -41,7 +43,6 @@
                                 DELETE
                             </button>
                         </form>
-                        <a th:if="${client.getAgreement() != null}" th:href="'/clients/'+${client.getClientID()+'/agreement'}" class="btn btn-warning">AGREEMENT</a>
                     </td>
                 </tr>
                 </tbody>

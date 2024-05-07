@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.jar.JarOutputStream;
 
 @Controller
 public class ClientController {
@@ -65,9 +66,14 @@ public class ClientController {
             System.out.println(bindingResult);
             return "clients_new";
         }
-        Client c = new Client(name, surname, email, phone, file.getOriginalFilename());
+        Client c = new Client(name, surname, email, phone);
+        if (!file.isEmpty()) {
+            c.setAgreement(file.getOriginalFilename());
+            clientRepository.save(c);
+            fileStorageService.store(file, c.getClientID().toString());
+            return "redirect:/clients";
+        }
         clientRepository.save(c);
-        fileStorageService.store(file, c.getClientID().toString());
         return "redirect:/clients";
     }
 
@@ -91,7 +97,8 @@ public class ClientController {
             @RequestParam("surname") String surname,
             @RequestParam("email") String email,
             @RequestParam("phone") String phone,
-            @RequestParam("file") MultipartFile file
+            @RequestParam("file") MultipartFile file,
+            @RequestParam("agreement") String agreement
     ){
         if (bindingResult.hasErrors()) {
             model.addAttribute("clients", client);
@@ -102,11 +109,14 @@ public class ClientController {
         c.setSurname(surname);
         c.setEmail(email);
         c.setPhone(phone);
-        if (file != null) {
+        System.out.println(file);
+        if (!file.isEmpty()) {
             c.setAgreement(file.getOriginalFilename());
-            fileStorageService.store(file, c.getClientID().toString());
+            clientRepository.save(c);
+            fileStorageService.store(file, clientID.toString());
+            return "redirect:/clients";
         }
-        c.setAgreement(c.getAgreement());
+        c.setAgreement(agreement);
         clientRepository.save(c);
 
         return "redirect:/clients";
