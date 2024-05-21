@@ -8,11 +8,9 @@ import com.example.crudapp.repos.RegistrationRepository;
 import com.example.crudapp.repos.WorkoutRepository;
 import com.example.crudapp.services.FileStorageService;
 import jakarta.validation.Valid;
-import org.hibernate.validator.internal.constraintvalidators.hv.CodePointLengthValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.jar.JarOutputStream;
 
 @Controller
 public class ClientController {

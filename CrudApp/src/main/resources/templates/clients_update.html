@@ -36,6 +36,7 @@
             <div class="mb-3">
                 <label class="form-label" for="file">Change Agreement:</label>
                 <input type="file" class="form-control" name="file" id="file" accept="application/pdf">
+                <span style="font-style: italic; color: deepskyblue">*Not Required</span>
             </div>
             <input type="hidden" name="agreement" th:value="${clients.getAgreement()}">
             <button type="submit" class="btn btn-primary">Submit</button>

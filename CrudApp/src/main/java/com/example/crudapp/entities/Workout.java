@@ -32,7 +32,6 @@ public class Workout {
         return WorkoutID;
     }
 
-
     public String getName() {
         return Name;
     }
